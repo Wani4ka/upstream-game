@@ -12,6 +12,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@josephuspaye/timer": "^0.1.1",
+    "gsap": "^3.11.4",
     "pinia": "^2.0.32",
     "underscore": "^1.13.6",
     "vue": "^3.2.47",

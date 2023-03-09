@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TheGame from '@/components/TheGame.vue'
+import Timer from '@/components/Timer.vue'
 import { ref } from 'vue'
 import type {
 	SerializedGameQuestion,
@@ -7,6 +8,7 @@ import type {
 } from '@/declarations/question'
 
 let questions = ref<ParsedGameQuestion[]>([])
+let paused = ref(false)
 
 let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 	let result: ParsedGameQuestion[] = []
@@ -45,6 +47,7 @@ fetch('/db.json')
 	})
 
 let onWin = () => {
+	paused.value = true
 	alert(
 		"Congratulations! That's it for now. Stay tuned for more updates! You can check out the footer for some links.",
 	)
@@ -61,5 +64,6 @@ let onFail = () => {
 </script>
 
 <template>
+	<Timer :paused="paused" />
 	<TheGame :questions="questions" @win="onWin" @fail="onFail" />
 </template>
