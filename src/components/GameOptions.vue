@@ -5,7 +5,8 @@
 			:class="{ 'cursor-pointer': !confirmed }"
 			:hoverable="!confirmed"
 			:state="states[0].value"
-			@click.prevent="pressAndConfirm(0)"
+			@mousedown.left.prevent="press(0)"
+			@mouseup.left.prevent="press(0)"
 			>{{ left }}</Panel
 		>
 		<Panel
@@ -13,7 +14,8 @@
 			:class="{ 'cursor-pointer': !confirmed }"
 			:hoverable="!confirmed"
 			:state="states[1].value"
-			@click.prevent="pressAndConfirm(1)"
+			@mousedown.left.prevent="press(1)"
+			@mouseup.left.prevent="press(1)"
 			>{{ right }}</Panel
 		>
 	</div>
@@ -63,15 +65,6 @@ function processClasses() {
 	states[selected.value].value =
 		selected.value === props.incorrect ? 'incorrect' : 'correct'
 	states[1 - selected.value].value = 'default'
-}
-
-function pressAndConfirm(direction: number) {
-	if (confirmed.value) {
-		return
-	}
-	selected.value = direction
-	confirmed.value = true
-	processClasses()
 }
 
 function press(direction: number) {
