@@ -55,6 +55,7 @@ let onFail = () => {
 		alert(
 			"Each time you give a correct answer, you'll be sent back to the beginning. Keep giving correct answers to win!",
 		)
+		failed = true
 	}
 }
 </script>
