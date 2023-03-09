@@ -53,7 +53,7 @@ let failed = false
 let onFail = () => {
 	if (!failed) {
 		alert(
-			"Each time you give a correct answer, you'll be sent back to the beginning. Keep giving correct answers to win!",
+			"Each time you give a correct answer, you'll be sent back to the beginning. Keep giving incorrect answers to win!",
 		)
 		failed = true
 	}

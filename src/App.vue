@@ -14,9 +14,12 @@
 				>.
 			</p>
 			<p>
-				<span class="font-black">WARNING! This website is not affiliated with WhatIF in any way.</span>
+				<span class="font-black"
+					>WARNING! This website is not affiliated with WhatIF in any
+					way.</span
+				>
 				<br />
-				This project is provided "as is" without warranty of any kind.
+				The project is provided "as is" without warranty of any kind.
 			</p>
 			<p>
 				Check out the
