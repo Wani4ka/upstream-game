@@ -3,8 +3,10 @@
 
 UpStream Game is an open-source recreation of a quiz by [WhatIF](https://www.youtube.com/playlist?list=PLtmHHXWOgWR7iH5lrB2ezGPamn2_H1l7Q).
 
+This project WAS **INSPIRED BY** WhatIF, not **affiliated** with them!
+
 ## PLEASE HELP ME!
-I was learning Vue for about 3 days or so, I feel really uncomfortable for know because I'm *really* bad at layout. How do I learn layouting? 😂
+I've been learning Vue for about 3 days or so, I feel really uncomfortable for know because I'm *really* bad at layout. How do I learn layouting? 😂
 
 ## Recommended IDE Setup
 
