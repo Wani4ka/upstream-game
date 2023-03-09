@@ -29,7 +29,7 @@
 					target="_blank"
 					>GitHub repository</a
 				>
-				to contribute. I'm really bat at frontend.
+				to contribute. I'm really bad at frontend.
 			</p>
 		</div>
 	</footer>
