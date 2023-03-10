@@ -21,8 +21,7 @@
 
 		<!-- Real game -->
 		<GameQuestion v-if="!(intro && introActive) && currentQuestion < questions.length">
-			<span v-if="showQuestionNumbers">{{ currentQuestion + 1 }}. </span
-			>{{ questions[currentQuestion].question }}
+			{{ questions[currentQuestion].question }}
 		</GameQuestion>
 		<GameOptions
 			v-if="!(intro && introActive) && currentQuestion < questions.length"
