@@ -93,6 +93,10 @@ const welcomeAlert: SweetAlertOptions = {
 	showDenyButton: true,
 	denyButtonText: 'Controls',
 	denyButtonColor: '#581c87',
+	preConfirm: () => {
+		confirmed.value = true
+		return true
+	},
 	preDeny: () => true,
 }
 
@@ -125,7 +129,7 @@ controlsAlert.preConfirm = () => {
 }
 
 onMounted(() => {
-	alerts.fire({backdrop: false, ...welcomeAlert}).then(d => confirmed.value = d.isConfirmed)
+	alerts.fire({backdrop: false, ...welcomeAlert})
 })
 </script>
 
