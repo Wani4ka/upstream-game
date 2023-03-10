@@ -1,8 +1,6 @@
 <template>
 	<div class="w-[75vw] max-w-4xl mx-auto">
-		<GameQuestion v-if="currentQuestion < questions.length">
-			<span v-if="showQuestionNumbers">{{ currentQuestion + 1 }}. </span
-			>{{ questions[currentQuestion].question }}
+		<GameQuestion v-if="currentQuestion < questions.length">{{ questions[currentQuestion].question }}
 		</GameQuestion>
 		<GameOptions
 			v-if="currentQuestion < questions.length"
