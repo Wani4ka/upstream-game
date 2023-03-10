@@ -8,7 +8,7 @@ import type {
 } from '@/declarations/question'
 
 let questions = ref<ParsedGameQuestion[]>([])
-let paused = ref(false)
+let paused = ref(true)
 
 let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 	let result: ParsedGameQuestion[] = []
@@ -43,7 +43,14 @@ let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 fetch('/db.json')
 	.then((resp) => resp.json())
 	.then((data) => {
-		questions.value = process(data)
+		let arr = process(data)
+		arr[-1] = {
+			'question': 'ggg',
+			'left': 'Lets go!',
+			'right': 'Nooo',
+			'incorrect': 1
+		}
+		questions.value = arr
 	})
 
 let onWin = () => {
@@ -64,6 +71,20 @@ let onFail = () => {
 </script>
 
 <template>
-	<Timer :paused="paused" />
-	<TheGame :questions="questions" @win="onWin" @fail="onFail" />
+	<div class="w-full absolute -top-20">
+		<Timer class="w-36 h-12 mx-auto" :length="153 * 1000" :paused="paused" />
+	</div>
+	<TheGame
+		v-if="questions.length"
+		:start-from="-1"
+		:questions="questions"
+		:intro="{
+			question: `See that timer? Give ${questions.length+1} incorrect answer(s) in a row before the timer runs out in order to win.\nYou can use left/right arrow keys if available.\nAre you ready?`,
+			left: 'Yes',
+			right: 'No',
+			incorrect: 1
+		}"
+		@win="onWin"
+		@fail="onFail"
+		@start="paused = false" />
 </template>
