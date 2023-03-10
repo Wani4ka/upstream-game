@@ -12,7 +12,7 @@
 		@win="goToMain"
 		@fail="++counter"
 	/>
-	<div v-if="counter > 0" class="text-center animate-pulse">
+	<div v-if="counter > 0" class="text-center animate-pulse mt-10">
 		UpStream is a game where you have to give
 		<span class="font-bold">incorrect</span> answer to questions. Try to
 		answer "No"!
