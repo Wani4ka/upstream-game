@@ -118,7 +118,7 @@ function lose() {
 
 <template>
 	<div v-if="questions.length && confirmed" class="w-full absolute -top-20">
-		<Timer class="w-36 h-12 mx-auto" :length="13 * 1000" :paused="paused" @complete="lose" />
+		<Timer class="w-36 h-12 mx-auto" :length="253 * 1000" :paused="paused" @complete="lose" />
 	</div>
 	<TheGame
 		v-if="questions.length && confirmed"
