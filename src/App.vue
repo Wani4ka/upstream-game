@@ -2,7 +2,7 @@
 	<RouterView />
 	<footer class="fixed bottom-3 left-0 text-center min-w-full">
 		<div
-			class="max-w-max text-sm ml-auto mr-auto border-t pt-2 border-current space-y-1"
+			class="max-w-max text-xs lg:text-sm ml-auto mr-auto border-t pt-2 border-current space-y-1"
 		>
 			<p>
 				UpStream Game is an open-source recreation of a quiz by
@@ -15,7 +15,7 @@
 			</p>
 			<p>
 				<span class="font-black"
-					>WARNING! This website is not affiliated with WhatIF in any
+					>This website is NOT affiliated with WhatIF in any
 					way.</span
 				>
 				<br />
@@ -29,7 +29,7 @@
 					target="_blank"
 					>GitHub repository</a
 				>
-				to contribute. I'm really bad at frontend.
+				to contribute.
 			</p>
 		</div>
 	</footer>
