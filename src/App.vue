@@ -2,7 +2,7 @@
 	<RouterView />
 	<footer class="fixed bottom-3 left-0 text-center min-w-full">
 		<div
-			class="max-w-max text-xs lg:text-sm ml-auto mr-auto border-t pt-2 border-current space-y-1"
+			class="max-w-max text-xs lg:text-sm ml-auto mr-auto"
 		>
 			<p>
 				Check out the

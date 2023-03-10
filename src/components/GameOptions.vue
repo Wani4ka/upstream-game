@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-row space-x-10 mt-8">
 		<Panel
-			class="text-center basis-1/2"
+			class="basis-1/2"
 			:class="{ 'cursor-pointer': !confirmed }"
 			:hoverable="!confirmed"
 			:state="states[0].value"
@@ -10,7 +10,7 @@
 			>{{ left }}</Panel
 		>
 		<Panel
-			class="text-center basis-1/2"
+			class="basis-1/2"
 			:class="{ 'cursor-pointer': !confirmed }"
 			:hoverable="!confirmed"
 			:state="states[1].value"

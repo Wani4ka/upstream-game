@@ -1,5 +1,5 @@
 <template>
-	<Panel state="default" class="text-center text-xl font-bold"
+	<Panel state="default" class="text-xl font-bold"
 		><slot
 	/></Panel>
 </template>

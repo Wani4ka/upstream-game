@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="grid place-items-center text-center">
 		<span
 			class="block absolute -inset-2 -skew-x-12 border border-x-8 border-double"
 			aria-hidden="true"
