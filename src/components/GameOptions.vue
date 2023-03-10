@@ -34,16 +34,23 @@ const emit = defineEmits(['proceed', 'fail'])
 
 let selected = ref(-1)
 let confirmed = ref(false)
+let locked = ref(false)
 
 const reset = () => {
+	locked.value = false
 	selected.value = -1
 	confirmed.value = false
 	processClasses()
 }
-defineExpose({ reset })
+const lock = () => {
+	locked.value = true
+	confirmed.value = true
+	processClasses()
+}
+defineExpose({ reset, lock })
 
 watch(confirmed, (val: boolean) => {
-	if (!val) {
+	if (!val || locked.value) {
 		return
 	}
 	emit(selected.value === props.incorrect ? 'proceed' : 'fail')

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TheGame from '@/components/TheGame.vue'
+import Timer from '@/components/Timer.vue'
 import { onMounted, ref } from 'vue'
 import type {
 	SerializedGameQuestion,
@@ -8,6 +9,7 @@ import type {
 import Swal, { type SweetAlertOptions } from 'sweetalert2'
 
 let questions = ref<ParsedGameQuestion[]>([])
+let paused = ref(true)
 
 let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 	let result: ParsedGameQuestion[] = []
@@ -46,25 +48,30 @@ fetch('https://gist.githubusercontent.com/Wani4ka/0ba2c2c48b1ce13a66960991c83647
 	})
 
 let onWin = () => {
+	paused.value = true
 	alert(
 		"Congratulations! That's it for now. Stay tuned for more updates! You can check out the footer for some links.",
 	)
 }
 let failed = false
+const failAlert: SweetAlertOptions = {
+	position: 'top',
+	icon: 'info',
+	text: 'Each time you give a correct answer, you\'ll be sent back to the beginning. Keep giving incorrect answers to win!',
+	background: 'var(--color-background)',
+	color: 'var(--color-text)',
+	showConfirmButton: false,
+	timer: 3000,
+	backdrop: false
+}
 let onFail = () => {
 	if (!failed) {
-		alert(
-			"Each time you give a correct answer, you'll be sent back to the beginning. Keep giving incorrect answers to win!",
-		)
+		Swal.fire(failAlert)
 		failed = true
 	}
 }
 
 let confirmed = ref(false)
-const alerts = Swal.mixin({
-	background: 'var(--color-background)',
-	color: 'var(--color-text)',
-})
 
 const welcomeAlert: SweetAlertOptions = {
 	icon: 'info',
@@ -90,49 +97,41 @@ const welcomeAlert: SweetAlertOptions = {
 	`,
 	confirmButtonText: 'Got it',
 	confirmButtonColor: '#1e3a8a',
-	showDenyButton: true,
-	denyButtonText: 'Controls',
-	denyButtonColor: '#581c87',
-	preConfirm: () => {
-		confirmed.value = true
-		return true
-	},
-	preDeny: () => true,
-}
-
-const controlsAlert: SweetAlertOptions = {
-	icon: 'info',
-	title: '<span style="color:var(--color-heading);">Controls</span>',
-	html: `
-		<div class="space-y-2">
-			<p>
-				You'll be prompted with a question and two options. You have to answer <i>incorrectly</i> to advance.
-			</p>
-			<p>
-				<span class="font-black">ProTip</span>: When using PC, you can use your arrow keys to answer!
-			</p>
-		</div>
-	`,
-	confirmButtonText: 'Got it',
-	confirmButtonColor: '#1e3a8a',
-	showDenyButton: false,
-	preConfirm: () => true,
-}
-
-welcomeAlert.preDeny = () => {
-	alerts.update(controlsAlert)
-	return false
-}
-controlsAlert.preConfirm = () => {
-	alerts.update(welcomeAlert)
-	return false
+	backdrop: false,
+	background: 'var(--color-background)',
+	color: 'var(--color-text)',
 }
 
 onMounted(() => {
-	alerts.fire({backdrop: false, ...welcomeAlert})
+	Swal.fire(welcomeAlert).then((d:any) => confirmed.value = d.isConfirmed)
 })
+
+let game = ref()
+
+function lose() {
+	if (game.value) {
+		game.value.lock()
+	}
+	alert('Unfortunately you\'ve lost :( Please refresh the page to play again.')
+}
 </script>
 
 <template>
-	<TheGame v-if="confirmed" :questions="questions" @win="onWin" @fail="onFail" />
+	<div v-if="questions.length && confirmed" class="w-full absolute -top-20">
+		<Timer class="w-36 h-12 mx-auto" :length="13 * 1000" :paused="paused" @complete="lose" />
+	</div>
+	<TheGame
+		v-if="questions.length && confirmed"
+		ref="game"
+		:start-from="-1"
+		:questions="questions"
+		:intro="{
+			question: `See that timer? Give ${questions.length+1} incorrect answer(s) in a row before the timer runs out in order to win.\nYou can use left/right arrow keys if available.\nAre you ready?`,
+			left: 'Yes',
+			right: 'No',
+			incorrect: 1
+		}"
+		@win="onWin"
+		@fail="onFail"
+		@start="paused = false" />
 </template>

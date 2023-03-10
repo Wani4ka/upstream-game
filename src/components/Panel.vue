@@ -21,7 +21,7 @@
 					hoverable && state === 'correct',
 			}"
 		></span>
-		<span class="relative select-none"><slot /></span>
+		<span class="relative select-none px-4"><slot /></span>
 	</div>
 </template>
 

@@ -12,6 +12,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@josephuspaye/timer": "^0.1.1",
+    "gsap": "^3.11.4",
     "pinia": "^2.0.32",
     "sweetalert2": "^11.7.3",
     "underscore": "^1.13.6",
@@ -20,6 +22,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
+    "@types/gsap": "^3.0.0",
     "@types/node": "^18.14.2",
     "@types/underscore": "^1.11.4",
     "@vitejs/plugin-vue": "^4.0.0",
