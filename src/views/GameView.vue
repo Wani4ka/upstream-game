@@ -39,10 +39,10 @@ let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 	return result
 }
 
-fetch('https://storage.yandexcloud.net/questions/original/s04e21.json')
+fetch('https://gist.githubusercontent.com/Wani4ka/0ba2c2c48b1ce13a66960991c836474c/raw/4458c27c003c02d05e2463a23346aeff530737a3/s04e23.json')
 	.then((resp) => resp.json())
 	.then((data) => {
-		questions.value = process(data)
+		questions.value = process(data.questions)
 	})
 
 let onWin = () => {
