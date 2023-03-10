@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import TheGame from '@/components/TheGame.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import type {
 	SerializedGameQuestion,
 	ParsedGameQuestion,
 } from '@/declarations/question'
+import Swal, { type SweetAlertOptions } from 'sweetalert2'
 
 let questions = ref<ParsedGameQuestion[]>([])
 
@@ -58,8 +59,76 @@ let onFail = () => {
 		failed = true
 	}
 }
+
+let confirmed = ref(false)
+const alerts = Swal.mixin({
+	background: 'var(--color-background)',
+	color: 'var(--color-text)',
+})
+
+const welcomeAlert: SweetAlertOptions = {
+	icon: 'info',
+	title: '<span style="color:var(--color-heading);">Welcome to UpStream!</span>',
+	html: `
+		<div class="space-y-2">
+			<p>
+				UpStream Game is recreation of a quiz by
+				<a
+					class="underline"
+					href="https://www.youtube.com/playlist?list=PLtmHHXWOgWR7iH5lrB2ezGPamn2_H1l7Q"
+					target="_blank"
+					>WhatIF</a
+				>.
+			</p>
+			<p>
+				If you'd like to contribute, check out the GitHub repository in footer. I'm really bad at frontend.
+			</p>
+			<p>
+				⚠️Please note that this website is <i>not</i> affiliated with WhatIF in any way. The project is provided "as is" without warranty of any kind.
+			</p>
+		</div>
+	`,
+	confirmButtonText: 'Got it',
+	confirmButtonColor: '#1e3a8a',
+	showDenyButton: true,
+	denyButtonText: 'Controls',
+	denyButtonColor: '#581c87',
+	preDeny: () => true,
+}
+
+const controlsAlert: SweetAlertOptions = {
+	icon: 'info',
+	title: '<span style="color:var(--color-heading);">Controls</span>',
+	html: `
+		<div class="space-y-2">
+			<p>
+				You'll be prompted with a question and two options. You have to answer <i>incorrectly</i> to advance.
+			</p>
+			<p>
+				<span class="font-black">ProTip</span>: When using PC, you can use your arrow keys to answer!
+			</p>
+		</div>
+	`,
+	confirmButtonText: 'Got it',
+	confirmButtonColor: '#1e3a8a',
+	showDenyButton: false,
+	preConfirm: () => true,
+}
+
+welcomeAlert.preDeny = () => {
+	alerts.update(controlsAlert)
+	return false
+}
+controlsAlert.preConfirm = () => {
+	alerts.update(welcomeAlert)
+	return false
+}
+
+onMounted(() => {
+	alerts.fire({backdrop: false, ...welcomeAlert}).then(d => confirmed.value = d.isConfirmed)
+})
 </script>
 
 <template>
-	<TheGame :questions="questions" @win="onWin" @fail="onFail" />
+	<TheGame v-if="confirmed" :questions="questions" @win="onWin" @fail="onFail" />
 </template>

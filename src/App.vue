@@ -5,23 +5,6 @@
 			class="max-w-max text-xs lg:text-sm ml-auto mr-auto border-t pt-2 border-current space-y-1"
 		>
 			<p>
-				UpStream Game is an open-source recreation of a quiz by
-				<a
-					class="underline"
-					href="https://www.youtube.com/playlist?list=PLtmHHXWOgWR7iH5lrB2ezGPamn2_H1l7Q"
-					target="_blank"
-					>WhatIF</a
-				>.
-			</p>
-			<p>
-				<span class="font-black"
-					>This website is NOT affiliated with WhatIF in any
-					way.</span
-				>
-				<br />
-				The project is provided "as is" without warranty of any kind.
-			</p>
-			<p>
 				Check out the
 				<a
 					class="underline"
