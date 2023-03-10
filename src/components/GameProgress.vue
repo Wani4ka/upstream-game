@@ -12,7 +12,7 @@
 					(!shouldApplyCustomState(index) && index >= current && index <= max) || (shouldApplyCustomState(index) && customState === 'yellow'),
 				'via-lime-800 from-lime-700 to-lime-700': (!shouldApplyCustomState(index) && index < current) || (shouldApplyCustomState(index) && customState === 'lime'),
 				'via-red-800 from-red-700 to-red-700': shouldApplyCustomState(index) && customState === 'red',
-				'text-slate-500': index > max+1,
+				'text-slate-500': index !== current && index > max+1,
 			}"
 		><div v-if="index === current" class="z-10 absolute w-[4px] bg-blue-100 h-full"/>{{ from + index - 1 }}</span>
 	</div>
