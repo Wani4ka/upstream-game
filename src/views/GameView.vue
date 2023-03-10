@@ -39,7 +39,7 @@ let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 	return result
 }
 
-fetch('/db.json')
+fetch('https://storage.yandexcloud.net/questions/original/s04e21.json')
 	.then((resp) => resp.json())
 	.then((data) => {
 		questions.value = process(data)
