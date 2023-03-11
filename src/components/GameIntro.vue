@@ -1,7 +1,7 @@
 <template>
 	<div class="w-[75vw] max-w-4xl mx-auto">
 		<GameQuestion>
-			<p>Вам нужно неправильно ответить на {{ amount }} вопросов подряд (не включая этот) до истечения таймера, чтобы победить.</p>
+			<p>Вам нужно неправильно ответить на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }} подряд до истечения таймера, чтобы победить.</p>
 			<p>Вы можете использовать стрелки ⯇⯈ для выбора ответа, если они у вас есть.</p>
 			<p>Вы готовы?</p>
 		</GameQuestion>
@@ -28,6 +28,7 @@
 	import GameOptions from '@/components/GameOptions.vue'
 	import GameProgress from '@/components/GameProgress.vue'
 	import { ref } from 'vue'
+	import { useCountFormat } from '@/composables/useCountFormat'
 
 	defineProps({
 		amount: {
@@ -43,6 +44,7 @@
 	const emit = defineEmits(['succeed', 'fail'])
 	let questionProgressState = ref('')
 	let options = ref()
+	let { formatCount } = useCountFormat()
 
 	function succeed() {
 		emit('succeed')
