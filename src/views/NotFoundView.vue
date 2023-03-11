@@ -2,9 +2,9 @@
 	<TheGame
 		:questions="[
 			{
-				question: 'Do you wanna play a quiz?',
-				left: 'Yes',
-				right: 'No',
+				question: 'Хотите сыграть в викторину?',
+				left: 'Да',
+				right: 'Нет',
 				incorrect: 1,
 			},
 		]"
@@ -13,9 +13,8 @@
 		@fail="++counter"
 	/>
 	<div v-if="counter > 0" class="text-center animate-pulse mt-10">
-		UpStream is a game where you have to give
-		<span class="font-bold">incorrect</span> answer to questions. Try to
-		answer "No"!
+		UpStream - это игра, где нужно давать
+		<span class="font-bold">неправильные</span> ответы на вопросы. Попробуйте ответить "Нет"!
 	</div>
 </template>
 

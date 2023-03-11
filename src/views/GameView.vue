@@ -50,14 +50,14 @@ fetch('https://gist.githubusercontent.com/Wani4ka/0ba2c2c48b1ce13a66960991c83647
 let onWin = () => {
 	paused.value = true
 	alert(
-		"Congratulations! That's it for now. Stay tuned for more updates! You can check out the footer for some links.",
+		"Поздравляем! На этом пока все. Заходите позже, чтобы увидеть что-то новое! Внизу сайта также есть хорошая ссылочка.",
 	)
 }
 let failed = false
 const failAlert: SweetAlertOptions = {
 	position: 'top',
 	icon: 'info',
-	text: 'Each time you give a correct answer, you\'ll be sent back to the beginning. Keep giving incorrect answers to win!',
+	text: 'За каждый правильный ответ отсчёт вопросов начинается с начала. Отвечайте неправильно, чтобы победить!',
 	background: 'var(--color-background)',
 	color: 'var(--color-text)',
 	showConfirmButton: false,
@@ -75,11 +75,11 @@ let confirmed = ref(false)
 
 const welcomeAlert: SweetAlertOptions = {
 	icon: 'info',
-	title: '<span style="color:var(--color-heading);">Welcome to UpStream!</span>',
+	title: '<span style="color:var(--color-heading);">Добро пожаловать в UpStream!</span>',
 	html: `
 		<div class="space-y-2">
 			<p>
-				UpStream Game is recreation of a quiz by
+				UpStream Game - это аналог викторины от
 				<a
 					class="underline"
 					href="https://www.youtube.com/playlist?list=PLtmHHXWOgWR7iH5lrB2ezGPamn2_H1l7Q"
@@ -88,14 +88,14 @@ const welcomeAlert: SweetAlertOptions = {
 				>.
 			</p>
 			<p>
-				If you'd like to contribute, check out the GitHub repository in footer. I'm really bad at frontend.
+				Если вы хотите внести вклад, перейдите по ссылке внизу сайта.
 			</p>
 			<p>
-				⚠️Please note that this website is <i>not</i> affiliated with WhatIF in any way. The project is provided "as is" without warranty of any kind.
+				⚠️Этот сайт <i>не связан</i> с WhatIF никоим образом. Проект предоставляется "как есть" без каких-либо гарантий.
 			</p>
 		</div>
 	`,
-	confirmButtonText: 'Got it',
+	confirmButtonText: 'Понятно',
 	confirmButtonColor: '#1e3a8a',
 	backdrop: false,
 	background: 'var(--color-background)',
@@ -112,7 +112,7 @@ function lose() {
 	if (game.value) {
 		game.value.lock()
 	}
-	alert('Unfortunately you\'ve lost :( Please refresh the page to play again.')
+	alert('К сожалению, вы не справились до конца таймера :( Обновите страницу, чтобы сыграть заново.')
 }
 </script>
 
@@ -125,12 +125,7 @@ function lose() {
 		ref="game"
 		:start-from="-1"
 		:questions="questions"
-		:intro="{
-			question: `See that timer? Give ${questions.length+1} incorrect answer(s) in a row before the timer runs out in order to win.\nYou can use left/right arrow keys if available.\nAre you ready?`,
-			left: 'Yes',
-			right: 'No',
-			incorrect: 1
-		}"
+		:show-intro="true"
 		@win="onWin"
 		@fail="onFail"
 		@start="paused = false" />
