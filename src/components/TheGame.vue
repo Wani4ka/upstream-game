@@ -1,19 +1,19 @@
 <template>
 	<GameIntro
 		v-if="showIntro && introActive"
-		:amount="questions.length"
+		:amount="questions().length"
 		@succeed="start"
 		@fail="$emit('fail')" />
 
 	<div v-if="!(showIntro && introActive)" class="w-[75vw] max-w-4xl mx-auto">
-		<GameQuestion v-if="currentQuestion < questions.length">{{ questions[currentQuestion].question }}
+		<GameQuestion v-if="currentQuestion < questions().length">{{ questions()[currentQuestion].question }}
 		</GameQuestion>
 		<GameOptions
-			v-if="currentQuestion < questions.length"
+			v-if="currentQuestion < questions().length"
 			ref="options"
-			:left="questions[currentQuestion].left"
-			:right="questions[currentQuestion].right"
-			:incorrect="questions[currentQuestion].incorrect"
+			:left="questions()[currentQuestion].left"
+			:right="questions()[currentQuestion].right"
+			:incorrect="questions()[currentQuestion].incorrect"
 			@proceed="answer(true, 'lime')"
 			@fail="answer(false, 'red')"
 		></GameOptions>
@@ -22,7 +22,7 @@
 			:max="maxAnswers"
 			:current="currentQuestion + 1"
 			:from="1"
-			:to="questions.length"
+			:to="questions().length"
 			v-if="showQuestionNumbers" />
 	</div>
 </template>
@@ -34,12 +34,12 @@ import GameProgress from '@/components/GameProgress.vue'
 import type { ParsedGameQuestion } from '@/declarations/question'
 import { ref } from 'vue'
 import GameIntro from '@/components/GameIntro.vue'
+import { useQuestionsStore } from '@/stores/questions'
 
 const props = defineProps({
 	showIntro: Boolean,
-	questions: {
+	customQuestions: {
 		type: Array<ParsedGameQuestion>,
-		required: true,
 	},
 	showQuestionNumbers: {
 		type: Boolean,
@@ -52,9 +52,14 @@ let currentQuestion = ref(0)
 let maxAnswers = ref(0)
 let questionProgressState = ref('')
 let options = ref()
+const storedQuestions = useQuestionsStore()
+
+let questions = () => {
+	return props.customQuestions || storedQuestions.value
+}
 
 let checkQuestionNum = () => {
-	if (currentQuestion.value >= props.questions.length) {
+	if (currentQuestion.value >= questions().length) {
 		emit('win')
 	} else if (!currentQuestion.value) {
 		emit('fail')

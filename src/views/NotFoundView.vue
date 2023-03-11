@@ -1,6 +1,6 @@
 <template>
 	<TheGame
-		:questions="[
+		:custom-questions="[
 			{
 				question: 'Хотите сыграть в викторину?',
 				left: 'Да',

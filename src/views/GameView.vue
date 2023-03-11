@@ -7,8 +7,9 @@ import type {
 	ParsedGameQuestion,
 } from '@/declarations/question'
 import Swal, { type SweetAlertOptions } from 'sweetalert2'
+import { useQuestionsStore } from '@/stores/questions'
 
-let questions = ref<ParsedGameQuestion[]>([])
+const questions = useQuestionsStore()
 let paused = ref(true)
 
 let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
@@ -44,7 +45,7 @@ let process = (data: SerializedGameQuestion[]): ParsedGameQuestion[] => {
 fetch('https://gist.githubusercontent.com/Wani4ka/0ba2c2c48b1ce13a66960991c836474c/raw/4458c27c003c02d05e2463a23346aeff530737a3/s04e23.json')
 	.then((resp) => resp.json())
 	.then((data) => {
-		questions.value = process(data.questions)
+		questions.$patch({ value: process(data.questions) })
 	})
 
 let onWin = () => {
@@ -117,14 +118,12 @@ function lose() {
 </script>
 
 <template>
-	<div v-if="questions.length && confirmed" class="w-full absolute -top-20">
+	<div v-if="questions.value.length && confirmed" class="w-full absolute -top-20">
 		<Timer class="w-36 h-12 mx-auto" :length="253 * 1000" :paused="paused" @complete="lose" />
 	</div>
 	<TheGame
-		v-if="questions.length && confirmed"
+		v-if="questions.value.length && confirmed"
 		ref="game"
-		:start-from="-1"
-		:questions="questions"
 		:show-intro="true"
 		@win="onWin"
 		@fail="onFail"

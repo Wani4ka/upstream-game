@@ -1,5 +1,5 @@
-export function useCountFormat() {
-	function formatCount(amount: number, single: string, plural: string, plural2to4 = plural): string {
+export const useCountFormat = () => {
+	const formatCount = (amount: number, single: string, plural: string, plural2to4 = plural): string => {
 		amount = Math.floor(Math.abs(amount))
 		let lastTwo = amount % 100
 		if (lastTwo > 10 && lastTwo < 20) {
