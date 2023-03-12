@@ -5,7 +5,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+	"target": "ES6",
+	"lib": [
+		"DOM",
+		"ES2018"
+	]
   },
 
   "references": [

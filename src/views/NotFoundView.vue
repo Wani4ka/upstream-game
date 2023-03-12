@@ -21,10 +21,12 @@
 <script setup lang="ts">
 import TheGame from '@/components/TheGame.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 
 let counter = ref(0)
+const router = useRouter()
 
 function goToMain() {
-	window.location.href = '/play'
+	router.push('/play')
 }
 </script>

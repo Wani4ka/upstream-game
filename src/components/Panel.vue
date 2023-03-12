@@ -1,8 +1,8 @@
 <template>
-	<div class="grid place-items-center text-center leading-none">
+	<div class="grid p-2 leading-none" :class="{'text-center place-items-center': !noCenter}">
 		<span
-			class="block absolute -inset-2 -skew-x-12 border border-x-8 border-double"
-			aria-hidden="true"
+			class="block absolute -inset-0 border border-x-8 border-double"
+			:style="{'transform': `skewX(${-skewSize}deg)`}"
 			:class="{
 				'bg-gradient-to-b': true,
 				'via-blue-900 from-blue-700 to-blue-700 border-blue-600':
@@ -21,13 +21,18 @@
 					hoverable && state === 'correct',
 			}"
 		></span>
-		<span class="relative select-none px-4"><slot /></span>
+		<span class="relative select-none px-4 pointer-events-none"><slot /></span>
 	</div>
 </template>
 
 <script setup lang="ts">
 defineProps({
+	noCenter: Boolean,
 	state: String,
 	hoverable: Boolean,
+	skewSize: {
+		type: Number,
+		default: 12
+	}
 })
 </script>

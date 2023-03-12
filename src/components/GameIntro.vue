@@ -2,7 +2,7 @@
 	<div class="w-[75vw] max-w-4xl mx-auto">
 		<GameQuestion>
 			<p>Дайте неправильный ответ на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }} подряд до истечения таймера, чтобы победить.</p>
-			<p>Вы можете использовать стрелки ⯇⯈ для выбора ответа, если они у вас есть.</p>
+			<p>Вы можете использовать стрелки <font-awesome-icon icon="fa-solid fa-caret-left"/><font-awesome-icon icon="fa-solid fa-caret-right"/> для выбора ответа, если они у вас есть.</p>
 			<p>Вы готовы?</p>
 		</GameQuestion>
 		<GameOptions
