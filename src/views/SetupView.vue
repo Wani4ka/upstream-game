@@ -1,5 +1,5 @@
 <template>
-	<Card class="h-[75vh] w-[50vw] min-w-[300px]">
+	<Card class="h-[75vh] w-[50vw] min-w-[300px]" v-if="confirmed">
 
 		<template #header> <!-- Breadcrumb from https://flowbite.com/docs/components/breadcrumb/ -->
 			<nav class="inline-flex mb-4">
@@ -74,6 +74,7 @@ import { useRouter } from 'vue-router'
 import { useQuestionsStore } from '@/stores/questions'
 import { useSettingsStore } from '@/stores/settings'
 import SelectableItem from '@/components/SelectableItem.vue'
+import { useGreeting } from '@/composables/useGreeting'
 
 const router = useRouter()
 
@@ -87,10 +88,9 @@ const activeScreen = ref(Windows.Categories)
 const settings = useSettingsStore()
 const questions = useQuestionsStore()
 const launchBtnPressed = ref(false)
-const loading = ref(false)
+const confirmed = useGreeting()
 
 function selectCategory(idx: string) {
-	loading.value = true
 	settings.changeCategory(idx)
 	activeScreen.value = Windows.Sets
 }
