@@ -1,7 +1,7 @@
 <template>
 	<div class="grid place-items-center text-center">
 		<span
-			class="block absolute -inset-2 -skew-x-12 border border-x-8 border-double"
+			class="block absolute -inset-2 -skew-x-12 border border-x-8 border-double leading-none"
 			aria-hidden="true"
 			:class="{
 				'bg-gradient-to-b': true,
