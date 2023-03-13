@@ -3,9 +3,11 @@ import type { ParsedGameQuestion } from '@/declarations/question'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useQuestionsStore = defineStore('questions', () => {
+export const useGameStore = defineStore('game', () => {
 	const name = ref('')
-	const list = ref<ParsedGameQuestion[]>([])
+	const questions = ref<ParsedGameQuestion[]>([])
+	const mode = ref('')
+	const time = ref(250)
 
 	const fetcher = useQuestionsFetcher()
 
@@ -13,11 +15,11 @@ export const useQuestionsStore = defineStore('questions', () => {
 		name.value = newName
 	}
 	function setList(newList: ParsedGameQuestion[]) {
-		list.value = newList
+		questions.value = newList
 	}
 	async function fetchList(url: string, params?: FetchParams) {
 		setList(await fetcher.fetchQuestions(url, params))
 	}
 
-	return { name, list, setName, setList, fetchList }
+	return { name, questions, mode, time, setName, setList, fetchList }
 })

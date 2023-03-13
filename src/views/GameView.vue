@@ -3,10 +3,10 @@ import TheGame from '@/components/TheGame.vue'
 import Timer from '@/components/Timer.vue'
 import { ref } from 'vue'
 import Swal, { type SweetAlertOptions } from 'sweetalert2'
-import { useQuestionsStore } from '@/stores/questions'
+import { useGameStore } from '@/stores/game'
 import { useGreeting } from '@/composables/useGreeting'
 
-const questions = useQuestionsStore()
+const questions = useGameStore()
 const paused = ref(true)
 const confirmed = useGreeting()
 const game = ref()
@@ -49,7 +49,7 @@ function lose() {
 			<div class="text-center text-2xl text-white font-medium mb-10">
 				{{ questions.name }}
 			</div>
-			<Timer class="w-36 h-12 mx-auto" :length="253 * 1000" :paused="paused" @complete="lose" />
+			<Timer class="w-36 h-12 mx-auto" :length="((questions.time) + 3) * 1000" :paused="paused" @complete="lose" />
 		</div>
 		<TheGame
 			ref="game"

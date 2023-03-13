@@ -17,8 +17,8 @@
 			</nav>
 		</template>
 
-		<div class="space-y-2">
-			<div class="text-center">
+		<div class="space-y-2 flex flex-col place-items-center">
+			<div class="text-center" v-if="$refs">
 				<p v-if="settings.fetching.categories">Загрузка списка категорий...</p>
 				<p v-if="settings.fetching.sets">Загрузка списка вопросов...</p>
 				<div class="bg-red-900 border-t border-b border-red-500 px-4 py-3" v-if="isEmpty">
@@ -45,9 +45,13 @@
 				@select="selectSet(settings.sets[id].id)"
 			>{{ settings.sets[id].desc }}</SelectableItem>
 
-			<div v-if="activeScreen === Windows.Settings">
-				<p class="text-center">Скоро тут будут настройки!</p>
-			</div>
+			<SettingsScreen
+				v-model:mode="questions.mode"
+				v-model:time="questions.time"
+				v-model:amount="questionsAmount"
+				:category="settings.category"
+				:set="settings.set"
+				v-if="activeScreen === Windows.Settings" />
 		</div>
 
 		<template #footer v-if="activeScreen === Windows.Settings">
@@ -70,8 +74,9 @@ import Card from '@/components/Card.vue'
 import Panel from '@/components/Panel.vue'
 import { ref, computed } from 'vue'
 import BreadcrumbItem from '@/components/BreadcrumbItem.vue'
+import SettingsScreen from '@/components/SettingsScreen.vue'
 import { useRouter } from 'vue-router'
-import { useQuestionsStore } from '@/stores/questions'
+import { useGameStore } from '@/stores/game'
 import { useSettingsStore } from '@/stores/settings'
 import SelectableItem from '@/components/SelectableItem.vue'
 import { useGreeting } from '@/composables/useGreeting'
@@ -86,9 +91,10 @@ enum Windows {
 
 const activeScreen = ref(Windows.Categories)
 const settings = useSettingsStore()
-const questions = useQuestionsStore()
+const questions = useGameStore()
 const launchBtnPressed = ref(false)
 const confirmed = useGreeting()
+const questionsAmount = ref(21)
 
 function selectCategory(idx: string) {
 	settings.changeCategory(idx)
@@ -102,7 +108,9 @@ function selectSet(idx: string) {
 
 function launch() {
 	launchBtnPressed.value = true
-	questions.fetchList(`https://q.wani4ka.ru/${settings.categoryId}/${settings.setId}.json`).then(() => {
+	questions.fetchList(`https://q.wani4ka.ru/${settings.categoryId}/${settings.setId}.json`, {
+		maxQuestions: questionsAmount.value
+	}).then(() => {
 		questions.setName(`${settings.category.name}, ${settings.set.name}`)
 		router.push('/play')
 	})

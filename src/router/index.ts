@@ -1,8 +1,8 @@
-import { useQuestionsStore } from '@/stores/questions'
+import { useGameStore } from '@/stores/game'
 import pinia from '@/stores/store'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const questions = useQuestionsStore(pinia)
+const questions = useGameStore(pinia)
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +12,7 @@ const router = createRouter({
 			name: 'game',
 			component: () => import('@/views/GameView.vue'),
 			beforeEnter: () => {
-				if (!(questions.list && questions.list.length)) {
+				if (!(questions.questions && questions.questions.length)) {
 					return '/setup'
 				}
 			}

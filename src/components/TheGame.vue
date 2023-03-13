@@ -34,7 +34,7 @@ import GameProgress from '@/components/GameProgress.vue'
 import type { ParsedGameQuestion } from '@/declarations/question'
 import { ref, computed } from 'vue'
 import GameIntro from '@/components/GameIntro.vue'
-import { useQuestionsStore } from '@/stores/questions'
+import { useGameStore } from '@/stores/game'
 
 const props = defineProps({
 	showIntro: Boolean,
@@ -52,9 +52,9 @@ let currentQuestion = ref(0)
 let maxAnswers = ref(0)
 let questionProgressState = ref('')
 let options = ref()
-const storedQuestions = useQuestionsStore()
+const storedGame = useGameStore()
 
-let questions = computed((): ParsedGameQuestion[] => props.customQuestions || storedQuestions.list)
+let questions = computed((): ParsedGameQuestion[] => props.customQuestions || storedGame.questions)
 
 let checkQuestionNum = () => {
 	if (currentQuestion.value >= questions.value.length) {

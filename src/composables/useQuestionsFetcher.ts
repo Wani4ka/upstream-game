@@ -1,6 +1,7 @@
-import type { QuestionCategory } from "@/declarations/category"
-import type { ParsedGameQuestion, SerializedGameQuestion } from "@/declarations/question"
-import type { QuestionSet } from "@/declarations/set"
+import type { QuestionCategory } from '@/declarations/category'
+import type { MappedContainer, ParsedContainer } from '@/declarations/container'
+import type { ParsedGameQuestion, SerializedGameQuestion } from '@/declarations/question'
+import type { QuestionSet } from '@/declarations/set'
 
 export type ParserFunction = (questions: SerializedGameQuestion[], params?: FetchParams) => ParsedGameQuestion[] | undefined
 
@@ -8,10 +9,6 @@ export type FetchParams = {
 	parser?: ParserFunction
 	maxQuestions?: number
 }
-
-export type IdentifiedContainer = { id: string }
-export type MappedContainer<T> = { [id: string]: T }
-export type ParsedContainer<T> = MappedContainer<T & {id: string}>
 
 export const useQuestionsFetcher = () => {
 	const defaultParser: ParserFunction = (data, params) => {

@@ -1,5 +1,6 @@
 import { useQuestionsFetcher } from '@/composables/useQuestionsFetcher'
 import type { QuestionCategory } from '@/declarations/category'
+import type { MappedContainer } from '@/declarations/container'
 import type { QuestionSet } from '@/declarations/set'
 import { defineStore } from 'pinia'
 import { computed, ref, reactive, watch } from 'vue'
@@ -7,11 +8,11 @@ import { computed, ref, reactive, watch } from 'vue'
 export const useSettingsStore = defineStore('settings', () => {
 	const defaultCategoriesURL = 'https://q.wani4ka.ru/all.json'
 
-	const categories = ref<{[id: string]: QuestionCategory}>({})
+	const categories = ref<MappedContainer<QuestionCategory>>({})
 	const categoryIds = computed(() => Object.keys(categories.value).sort((a, b) => categories.value[a].name.localeCompare(categories.value[b].name) || categories.value[a].id.localeCompare(categories.value[b].name)))
 	const categoryId = ref('')
 	const category = computed(() => categories.value[categoryId.value])
-	const sets = ref<{[id: string]: QuestionSet}>({})
+	const sets = ref<MappedContainer<QuestionSet>>({})
 	const setIds = computed(() => Object.keys(sets.value).sort((a, b) => sets.value[a].name.localeCompare(sets.value[b].name) || sets.value[a].id.localeCompare(sets.value[b].name)))
 	const setId = ref('')
 	const set = computed(() => sets.value[setId.value])
