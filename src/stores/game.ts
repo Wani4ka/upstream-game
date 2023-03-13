@@ -6,7 +6,7 @@ import { ref } from 'vue'
 export const useGameStore = defineStore('game', () => {
 	const name = ref('')
 	const questions = ref<ParsedGameQuestion[]>([])
-	const mode = ref('')
+	const mode = ref('classic')
 	const time = ref(250)
 
 	const fetcher = useQuestionsFetcher()
