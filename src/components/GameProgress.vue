@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-row flex-wrap max-w-full gap-y-1 justify-center mt-5">
+	<div class="flex flex-row flex-wrap max-w-full gap-y-1 justify-center mt-3">
 		<span
 			v-for="index in (to-from+1)"
 			:key="index"

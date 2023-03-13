@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-row space-x-10 mt-8">
+	<div class="flex flex-row space-x-10 mt-3">
 		<Panel
 			class="basis-1/2"
 			:class="{ 'cursor-pointer': !confirmed }"
