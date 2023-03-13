@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 import { computed, ref, reactive, watch } from 'vue'
 
 export const useSettingsStore = defineStore('settings', () => {
-	const defaultCategoriesURL = 'https://gist.githubusercontent.com/Wani4ka/e432da083bd900539c01a6ac0f9e67cb/raw/446a6a1be9dcce3268760b5aa7ff427827487f6f/all.json'
+	const defaultCategoriesURL = 'https://q.wani4ka.ru/all.json'
 
 	const categories = ref<{[id: string]: QuestionCategory}>({})
 	const categoryIds = computed(() => Object.keys(categories.value).sort((a, b) => categories.value[a].name.localeCompare(categories.value[b].name) || categories.value[a].id.localeCompare(categories.value[b].name)))
@@ -45,7 +45,7 @@ export const useSettingsStore = defineStore('settings', () => {
 		while (fetching.sets) {} // i'm really sorry for this((
 		fetching.sets = true
 		try {
-			const fetchedSets = await fetcher.fetchSets(category.value.sets_url)
+			const fetchedSets = await fetcher.fetchSets(`https://q.wani4ka.ru/${newCategory}.json`)
 			if (categoryId.value === newCategory)
 				sets.value = fetchedSets
 		} catch (e) {

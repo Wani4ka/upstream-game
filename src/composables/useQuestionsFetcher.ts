@@ -29,13 +29,13 @@ export const useQuestionsFetcher = () => {
 		count = Math.min(count, params?.maxQuestions || 21)
 		for (let i = 0; i < count; ++i) {
 			let left: string, right: string, incorrect: 0 | 1
-			;[left, right, incorrect] = [data[i].incorrect, data[i].correct, 0]
+			[left, right, incorrect] = [data[i].inc, data[i].cor, 0]
 			if (Math.random() >= 0.5) {
 				;[left, right] = [right, left]
 				incorrect = 1
 			}
 			result.push({
-				question: data[i].question,
+				question: data[i].q,
 				left,
 				right,
 				incorrect,
@@ -70,7 +70,7 @@ export const useQuestionsFetcher = () => {
 			fetch(url)
 			.then((resp) => resp.json())
 			.then((data) => {
-				const result = wrappedParser(data.questions)
+				const result = wrappedParser(data)
 				if (result === undefined) {
 					reject(Error('Couldn\t parse questions even with a default parser'))
 				} else resolve(result)

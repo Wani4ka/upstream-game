@@ -1,7 +1,7 @@
 export interface SerializedGameQuestion {
-	question: string
-	incorrect: string
-	correct: string
+	q: string
+	inc: string
+	cor: string
 }
 
 export interface ParsedGameQuestion {

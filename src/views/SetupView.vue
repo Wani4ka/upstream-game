@@ -1,7 +1,7 @@
 <template>
 	<Card class="h-[75vh] w-[50vw] min-w-[300px]" v-if="confirmed">
 
-		<template #header> <!-- Breadcrumb from https://flowbite.com/docs/components/breadcrumb/ -->
+		<template #header>
 			<nav class="inline-flex mb-4">
 			<div class="flex flex-wrap gap-1 items-center md:space-x-3 align-middle">
 				<BreadcrumbItem :disabled="activeScreen === Windows.Categories" @click="activeScreen = Windows.Categories" icon="fa-solid fa-home" :first="true">
@@ -102,7 +102,7 @@ function selectSet(idx: string) {
 
 function launch() {
 	launchBtnPressed.value = true
-	questions.fetchList(settings.set.questions_url).then(() => {
+	questions.fetchList(`https://q.wani4ka.ru/${settings.categoryId}/${settings.setId}.json`).then(() => {
 		questions.setName(`${settings.category.name}, ${settings.set.name}`)
 		router.push('/play')
 	})
