@@ -41,6 +41,7 @@ import SelectableItem from './SelectableItem.vue'
 import SettingsCategory from './SettingsCategory.vue'
 import type { QuestionCategory } from '@/declarations/category'
 import type { QuestionSet } from '@/declarations/set'
+import type { MappedContainer } from '@/declarations/container'
 
 const props = defineProps({
 	category: {
@@ -68,7 +69,13 @@ const seconds = computed(() => compTime.value % 60)
 
 watch(compTime, newVal => emit('update:time', newVal))
 
-const modes = {
+type Mode = {
+	id: string
+	name: string
+	desc?: string
+}
+
+const modes: MappedContainer<Mode> = {
 	classic: {
 		id: 'classic',
 		name: 'Классический',
