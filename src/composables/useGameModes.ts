@@ -1,5 +1,7 @@
 import type { MappedContainer } from "@/declarations/container"
 
+type AnsFunction = (correct: 0 | 1) => (0 | 1)
+
 export type Mode = {
 	id: string
 	name: string
@@ -7,7 +9,7 @@ export type Mode = {
 	desc?: string
 	firstFailMsg: string
 	timerMul: number
-	ansFunc?: (correct: 0 | 1) => (0 | 1)
+	ansFunc?: AnsFunction
 }
 
 export const useGameModes = () => {
@@ -33,7 +35,7 @@ export const useGameModes = () => {
 	}
 
 	const modifyTime = (t: number, mode: string | undefined) => t * (mode && data[mode] ? data[mode].timerMul : 1)
-	const modifyAnswer = (ans: (0 | 1), mode: string | undefined): (0 | 1) => (mode && data[mode] && data[mode].ansFunc ? data[mode].ansFunc(ans) : ans)
+	const modifyAnswer = (ans: (0 | 1), mode: string | undefined): (0 | 1) => (mode && data[mode] && data[mode].ansFunc ? (data[mode].ansFunc as AnsFunction)(ans) : ans)
 
 	return { data, modifyTime, modifyAnswer }
 }
