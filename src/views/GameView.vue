@@ -49,7 +49,7 @@ function lose() {
 	<div v-if="confirmed">
 		<div class="w-full absolute -top-36 select-none">
 			<div class="text-center text-2xl text-white font-medium mb-10">
-				<p>{{ store.name }}{{ store.mode !== 'classic' ? ` (${modes.data[store.mode].name})` : '' }}</p>
+				<p>{{ store.name }}</p>
 			</div>
 			<Timer class="w-36 h-12 mx-auto" :length="((store.time) + 3) * 1000" :paused="paused" @complete="lose" />
 		</div>
