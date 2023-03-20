@@ -14,7 +14,7 @@
 				'via-red-800 from-red-700 to-red-700': shouldApplyCustomState(index) && customState === 'red',
 				'text-slate-500': index !== current && index > max+1,
 			}"
-		><div v-if="index === current" class="z-10 absolute w-[4px] bg-blue-100 h-full"/>{{ from + index - 1 }}</span>
+		><font-awesome-icon :icon="['fas', 'chevron-right']" style="--fa-primary-color:#ffffff;--fa-secondary-color:#ffffff;" v-if="index === current" class="z-10 absolute -left-3 h-[125%] -top-[0.1875rem]"/>{{ from + index - 1 }}</span>
 	</div>
 </template>
 
