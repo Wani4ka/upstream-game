@@ -1,7 +1,7 @@
 <template>
 	<div class="w-[75vw] max-w-4xl mx-auto">
 		<GameQuestion>
-			<p>Дайте {{ mode === 'downstream' ? 'правильный' : 'неправильный' }} ответ на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }} подряд до истечения таймера, чтобы победить.</p>
+			<p>{{ modes.data[mode].summary }} на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }} подряд до истечения таймера, чтобы победить.</p>
 			<p>Вы можете использовать стрелки <font-awesome-icon icon="fa-solid fa-caret-left"/><font-awesome-icon icon="fa-solid fa-caret-right"/> для выбора ответа, если они у вас есть.</p>
 			<p>Вы готовы?</p>
 		</GameQuestion>
@@ -9,7 +9,7 @@
 			ref="options"
 			left="Да"
 			right="Нет"
-			:incorrect="mode === 'downstream' ? 0 : 1"
+			:incorrect="modes.modifyAnswer(1, mode)"
 			@proceed="succeed"
 			@fail="fail"
 		></GameOptions>
@@ -29,6 +29,7 @@
 	import GameProgress from '@/components/GameProgress.vue'
 	import { ref } from 'vue'
 	import { useCountFormat } from '@/composables/useCountFormat'
+import { useGameModes } from '@/composables/useGameModes'
 
 	defineProps({
 		amount: {
@@ -49,6 +50,7 @@
 	let questionProgressState = ref('')
 	let options = ref()
 	let { formatCount } = useCountFormat()
+	const modes = useGameModes()
 
 	function succeed() {
 		emit('succeed')

@@ -80,11 +80,12 @@ import Panel from '@/components/Panel.vue'
 import { ref, computed } from 'vue'
 import BreadcrumbItem from '@/components/BreadcrumbItem.vue'
 import SettingsScreen from '@/components/SettingsScreen.vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useGameStore } from '@/stores/game'
 import { useSettingsStore } from '@/stores/settings'
 import SelectableItem from '@/components/SelectableItem.vue'
 import { useGreeting } from '@/composables/useGreeting'
+import { useGameModes } from '@/composables/useGameModes'
 
 const router = useRouter()
 

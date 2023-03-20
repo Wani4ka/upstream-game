@@ -20,6 +20,7 @@ import { useRoute, useRouter } from 'vue-router'
 import Card from '@/components/Card.vue'
 import Panel from '@/components/Panel.vue'
 import { useGameStore } from '@/stores/game'
+import { useGameModes } from '@/composables/useGameModes'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,6 +28,7 @@ const settings = useSettingsStore()
 const game = useGameStore()
 const error = ref()
 const questionsAmount = ref(21)
+const modes = useGameModes()
 
 const message = computed(() => {
 	if (!settings.category) {
@@ -41,13 +43,15 @@ const message = computed(() => {
 function parseParams() {
 	if (route.query.gm) {
 		game.mode = route.query.gm as string
+		if (!modes.data[game.mode])
+			throw new Error(`Invalid game mode, possible values are ${Object.keys(modes.data)}`)
 	}
 	if (route.query.qs) {
 		questionsAmount.value = parseInt(route.query.qs as string)
-		if (isNaN(questionsAmount.value) || !isFinite(questionsAmount.value))
+		if (isNaN(questionsAmount.value) || !isFinite(questionsAmount.value) || questionsAmount.value <= 0 || Math.floor(questionsAmount.value) !== questionsAmount.value)
 			throw new Error('Invalid questions amount')
 	}
-	game.time = Math.round(questionsAmount.value * 11.9047619048)
+	game.time = Math.round(modes.modifyTime(questionsAmount.value * 11.9047619048, game.mode))
 }
 
 try {

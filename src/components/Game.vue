@@ -14,7 +14,7 @@
 			ref="options"
 			:left="questions[currentQuestion].left"
 			:right="questions[currentQuestion].right"
-			:incorrect="mode === 'downstream' ? 1 - questions[currentQuestion].incorrect : questions[currentQuestion].incorrect"
+			:incorrect="modes.modifyAnswer(questions[currentQuestion].incorrect, mode)"
 			@proceed="answer(true, 'lime')"
 			@fail="answer(false, 'red')"
 		></GameOptions>
@@ -35,6 +35,7 @@ import GameProgress from '@/components/GameProgress.vue'
 import type { ParsedGameQuestion } from '@/declarations/question'
 import { ref } from 'vue'
 import GameIntro from '@/components/GameIntro.vue'
+import { useGameModes } from '@/composables/useGameModes'
 
 const props = defineProps({
 	showIntro: Boolean,
@@ -57,6 +58,7 @@ let currentQuestion = ref(0)
 let maxAnswers = ref(0)
 let questionProgressState = ref('')
 let options = ref()
+const modes = useGameModes()
 
 let checkQuestionNum = () => {
 	if (currentQuestion.value >= props.questions.length) {

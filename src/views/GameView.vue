@@ -5,11 +5,13 @@ import { ref } from 'vue'
 import Swal, { type SweetAlertOptions } from 'sweetalert2'
 import { useGameStore } from '@/stores/game'
 import { useGreeting } from '@/composables/useGreeting'
+import { useGameModes } from '@/composables/useGameModes'
 
 const paused = ref(true)
 const confirmed = useGreeting()
 const game = ref()
 const store = useGameStore()
+const modes = useGameModes()
 
 let onWin = () => {
 	paused.value = true
@@ -21,7 +23,7 @@ let failed = false
 const failAlert: SweetAlertOptions = {
 	position: 'top',
 	icon: 'info',
-	text: `За каждый ${store.mode === 'downstream' ? 'неправильный' : 'правильный'} ответ отсчёт вопросов начинается с начала. Отвечайте ${store.mode === 'downstream' ? 'правильно' : 'неправильно'}, чтобы победить!`,
+	text: modes.data[store.mode].firstFailMsg,
 	background: 'var(--color-background)',
 	color: 'var(--color-text)',
 	showConfirmButton: false,
@@ -47,7 +49,7 @@ function lose() {
 	<div v-if="confirmed">
 		<div class="w-full absolute -top-36 select-none">
 			<div class="text-center text-2xl text-white font-medium mb-10">
-				<p>{{ store.name }}{{ store.mode === 'downstream' ? ' (DownStream)' : '' }}</p>
+				<p>{{ store.name }}{{ store.mode !== 'classic' ? ` (${modes.data[store.mode].name})` : '' }}</p>
 			</div>
 			<Timer class="w-36 h-12 mx-auto" :length="((store.time) + 3) * 1000" :paused="paused" @complete="lose" />
 		</div>
