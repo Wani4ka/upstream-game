@@ -1,6 +1,6 @@
 <template>
-	<TheGame
-		:custom-questions="[
+	<Game
+		:questions="[
 			{
 				question: 'Хотите сыграть в викторину?',
 				left: 'Да',
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import TheGame from '@/components/TheGame.vue'
+import Game from '@/components/Game.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 

@@ -2,6 +2,7 @@
 	<GameIntro
 		v-if="showIntro && introActive"
 		:amount="questions.length"
+		:mode="mode"
 		@succeed="start"
 		@fail="$emit('fail')" />
 
@@ -13,7 +14,7 @@
 			ref="options"
 			:left="questions[currentQuestion].left"
 			:right="questions[currentQuestion].right"
-			:incorrect="questions[currentQuestion].incorrect"
+			:incorrect="mode === 'downstream' ? 1 - questions[currentQuestion].incorrect : questions[currentQuestion].incorrect"
 			@proceed="answer(true, 'lime')"
 			@fail="answer(false, 'red')"
 		></GameOptions>
@@ -32,19 +33,23 @@ import GameQuestion from '@/components/GameQuestion.vue'
 import GameOptions from '@/components/GameOptions.vue'
 import GameProgress from '@/components/GameProgress.vue'
 import type { ParsedGameQuestion } from '@/declarations/question'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import GameIntro from '@/components/GameIntro.vue'
-import { useGameStore } from '@/stores/game'
 
 const props = defineProps({
 	showIntro: Boolean,
-	customQuestions: {
+	questions: {
 		type: Array<ParsedGameQuestion>,
+		required: true,
 	},
 	showQuestionNumbers: {
 		type: Boolean,
 		default: true,
 	},
+	mode: {
+		type: String,
+		default: 'classic'
+	}
 })
 const emit = defineEmits(['win', 'fail', 'start'])
 let introActive = ref(true)
@@ -52,12 +57,9 @@ let currentQuestion = ref(0)
 let maxAnswers = ref(0)
 let questionProgressState = ref('')
 let options = ref()
-const storedGame = useGameStore()
-
-let questions = computed((): ParsedGameQuestion[] => props.customQuestions || storedGame.questions)
 
 let checkQuestionNum = () => {
-	if (currentQuestion.value >= questions.value.length) {
+	if (currentQuestion.value >= props.questions.length) {
 		emit('win')
 	} else if (!currentQuestion.value) {
 		emit('fail')

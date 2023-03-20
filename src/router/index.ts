@@ -23,6 +23,11 @@ const router = createRouter({
 			component: () => import('@/views/SetupView.vue'),
 		},
 		{
+			path: '/start/:category/:set',
+			name: 'start',
+			component: () => import('@/views/StartView.vue')
+		},
+		{
 			path: '/:pathMatch(.*)*',
 			component: () => import('@/views/NotFoundView.vue'),
 		},

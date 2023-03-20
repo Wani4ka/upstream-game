@@ -55,16 +55,21 @@
 		</div>
 
 		<template #footer v-if="activeScreen === Windows.Settings">
-			<Panel
-				class="mx-3"
-				:class="{
-					'cursor-pointer': !launchBtnPressed,
-					'cursor-default': launchBtnPressed,
-				}"
-				:hoverable="!launchBtnPressed"
-				@click="launch"
-				:state="launchBtnPressed ? 'incorrect' : 'default'"
-			>Запустить</Panel>
+			<div class="flex flex-row gap-1 md:gap-3">
+				<Panel class="basis-1/3 cursor-pointer" :hoverable="true" :state="'default'" @click="copyToClipboard">
+					Экспортировать
+				</Panel>
+				<Panel
+					class="basis-2/3"
+					:class="{
+						'cursor-pointer': !launchBtnPressed,
+						'cursor-default': launchBtnPressed,
+					}"
+					:hoverable="!launchBtnPressed"
+					@click="launch"
+					:state="launchBtnPressed ? 'incorrect' : 'default'"
+				>Запустить</Panel>
+			</div>
 		</template>
 	</Card>
 </template>
@@ -75,7 +80,7 @@ import Panel from '@/components/Panel.vue'
 import { ref, computed } from 'vue'
 import BreadcrumbItem from '@/components/BreadcrumbItem.vue'
 import SettingsScreen from '@/components/SettingsScreen.vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from '@/stores/game'
 import { useSettingsStore } from '@/stores/settings'
 import SelectableItem from '@/components/SelectableItem.vue'
@@ -104,6 +109,22 @@ function selectCategory(idx: string) {
 function selectSet(idx: string) {
 	settings.changeSet(idx)
 	activeScreen.value = Windows.Settings
+}
+
+function copyToClipboard() {
+	let url = `${window.location.origin}/start/${settings.categoryId}/${settings.setId}`
+	let params = []
+	if (questions.mode !== 'classic')
+		params.push(['gm', questions.mode])
+	if (questionsAmount.value !== 21)
+		params.push(['qs', questionsAmount.value])
+	if (params) {
+		url += `?${params[0][0]}=${params[0][1]}`
+		for (let i = 1; i < params.length; ++i)
+			url += `&${params[i][0]}=${params[i][1]}`
+	}
+	navigator.clipboard.writeText(url)
+	alert('Ссылка на генерацию игры скопирована в буфер обмена!')
 }
 
 function launch() {

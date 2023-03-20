@@ -27,13 +27,13 @@ export const useSettingsStore = defineStore('settings', () => {
 
 	function changeCategory(newCategory: string) {
 		if (!categories.value[newCategory]) {
-			throw new Error(`Category not found, possible values are ${Object.keys(categories)}`)
+			throw new Error(`Category not found, possible values are ${Object.keys(categories.value)}`)
 		}
 		categoryId.value = newCategory
 	}
 	function changeSet(newSet: string) {
 		if (!sets.value[newSet]) {
-			throw new Error(`Set not found, possible values are ${Object.keys(sets)}`)
+			throw new Error(`Set not found, possible values are ${Object.keys(sets.value)}`)
 		}
 		setId.value = newSet
 	}

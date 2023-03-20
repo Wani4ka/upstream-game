@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import TheGame from '@/components/TheGame.vue'
+import Game from '@/components/Game.vue'
 import Timer from '@/components/Timer.vue'
 import { ref } from 'vue'
 import Swal, { type SweetAlertOptions } from 'sweetalert2'
 import { useGameStore } from '@/stores/game'
 import { useGreeting } from '@/composables/useGreeting'
 
-const questions = useGameStore()
 const paused = ref(true)
 const confirmed = useGreeting()
 const game = ref()
+const store = useGameStore()
 
 let onWin = () => {
 	paused.value = true
@@ -21,7 +21,7 @@ let failed = false
 const failAlert: SweetAlertOptions = {
 	position: 'top',
 	icon: 'info',
-	text: 'За каждый правильный ответ отсчёт вопросов начинается с начала. Отвечайте неправильно, чтобы победить!',
+	text: `За каждый ${store.mode === 'downstream' ? 'неправильный' : 'правильный'} ответ отсчёт вопросов начинается с начала. Отвечайте ${store.mode === 'downstream' ? 'правильно' : 'неправильно'}, чтобы победить!`,
 	background: 'var(--color-background)',
 	color: 'var(--color-text)',
 	showConfirmButton: false,
@@ -47,11 +47,13 @@ function lose() {
 	<div v-if="confirmed">
 		<div class="w-full absolute -top-36 select-none">
 			<div class="text-center text-2xl text-white font-medium mb-10">
-				{{ questions.name }}
+				<p>{{ store.name }}{{ store.mode === 'downstream' ? ' (DownStream)' : '' }}</p>
 			</div>
-			<Timer class="w-36 h-12 mx-auto" :length="((questions.time) + 3) * 1000" :paused="paused" @complete="lose" />
+			<Timer class="w-36 h-12 mx-auto" :length="((store.time) + 3) * 1000" :paused="paused" @complete="lose" />
 		</div>
-		<TheGame
+		<Game
+			:questions="store.questions"
+			:mode="store.mode"
 			ref="game"
 			:show-intro="true"
 			@win="onWin"

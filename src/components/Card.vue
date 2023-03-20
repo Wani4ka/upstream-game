@@ -1,5 +1,5 @@
 <template>
-	<div class="soft rounded-lg p-3 flex flex-col">
+	<div class="rounded-lg p-3 flex flex-col" :class="{'soft': !customBg}">
 		<div class="mt-2" v-if="!!$slots.header">
 			<slot name="header"/>
 		</div>
@@ -12,3 +12,8 @@
 	</div>
 </template>
 
+<script setup lang="ts">
+defineProps({
+	customBg: Boolean
+})
+</script>

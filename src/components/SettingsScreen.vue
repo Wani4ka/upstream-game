@@ -11,25 +11,10 @@
 		</SettingsCategory>
 		<SettingsCategory title="Вопросы">
 			<label for="steps-range" class="w-[100%] text-sm font-medium text-white text-left">Количество вопросов</label>
-			<span class="w-[100%] text-left">* Это пока единственный рабочий параметр</span>
 			<div class="w-full place-items-left">
 				<input id="steps-range" type="range" :value="amount" @input="updateAmount" :min="1" :max="set.size" :step="1" class="w-[calc(100%-3.5rem)] h-2 rounded-lg appearance-none cursor-pointer bg-gray-700">
 				<input type="number" :min="1" :max="set.size" :value="amount" @input="updateAmount" :step="1" class="ml-2 bg-transparent border-b rounded px-1 w-12">
 				<p class="text-center">Времени на игру: <span class="font-medium">{{ minutes }}:{{ `0${seconds}`.slice(-2) }}</span></p>
-			</div>
-		</SettingsCategory>
-		<SettingsCategory title="Управление стрелками">
-			<div class="place-self-start">
-				<div>
-					<label for="arrows-insta" class="-ml-1">
-						<input type="radio" id="arrows-insta" name="arrows"> Ответ дается моментально
-					</label>
-				</div>
-				<div>
-					<label for="arrows-confirm">
-						<input type="radio" id="arrows-confirm" name="arrows"> Ответ нужно подтверждать
-					</label>
-				</div>
 			</div>
 		</SettingsCategory>
 	</div>
