@@ -15,10 +15,10 @@
 				'text-slate-500': index !== current && index > max+1,
 			}"
 		>
-			<span class="w-0.5 z-10 absolute left-0 h-full" v-if="checkpoints && (index-1) % checkpoints === 0" :class="{
-				'bg-slate-600': index > current,
-				'bg-slate-400': Math.floor(index / checkpoints) < Math.floor((current-1) / checkpoints),
-				'bg-slate-200': Math.floor(index / checkpoints) === Math.floor((current-1) / checkpoints),
+			<span class="w-0.5 z-10 absolute left-0 h-full" v-if="checkpoints && ((from+index-1)-1) % checkpoints === 0" :class="{
+				'bg-slate-600': (from+index-1) > current,
+				'bg-slate-400': Math.floor((from+index-1) / checkpoints) < Math.floor((current-1) / checkpoints),
+				'bg-slate-200': Math.floor((from+index-1) / checkpoints) === Math.floor((current-1) / checkpoints),
 			}"></span>
 			<font-awesome-icon :icon="['fas', 'chevron-right']" style="--fa-primary-color:#ffffff;--fa-secondary-color:#ffffff;" v-if="index === current" class="z-20 absolute -left-3 h-[125%] -top-[0.1875rem]"/>
 			{{ from + index - 1 }}
