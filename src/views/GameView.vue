@@ -56,6 +56,7 @@ function lose() {
 		<Game
 			:questions="store.questions"
 			:mode="store.mode"
+			:checkpoints="store.checkpointsPeriod"
 			ref="game"
 			:show-intro="true"
 			@win="onWin"

@@ -1,8 +1,9 @@
 <template>
 	<div class="w-[75vw] max-w-4xl mx-auto">
 		<GameQuestion>
-			<p>{{ modes.data[mode].summary }} на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }} подряд до истечения таймера, чтобы победить.</p>
-			<p>Вы можете использовать стрелки <font-awesome-icon icon="fa-solid fa-caret-left"/><font-awesome-icon icon="fa-solid fa-caret-right"/> для выбора ответа, если они у вас есть.</p>
+			<p>{{ modes.data[mode].summary }} на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }}{{ checkpoints ? '' : ' подряд' }} до истечения таймера, чтобы победить.</p>
+			<p v-if="checkpoints > 0">Чекпойнты расставлены на каждом{{ checkpoints > 1 ? ` ${checkpoints}-м` : '' }} вопросе. Если вы ошибетесь, то вернетесь к последнему пройденному чекпойнту.</p>
+			<p v-if="!isMobile()">Вы можете использовать стрелки <font-awesome-icon icon="fa-solid fa-caret-left"/><font-awesome-icon icon="fa-solid fa-caret-right"/> для выбора ответа, если они у вас есть.</p>
 			<p>Вы готовы?</p>
 		</GameQuestion>
 		<GameOptions
@@ -18,6 +19,7 @@
 			:max="0"
 			:current="1"
 			:from="0"
+			:checkpoints="checkpoints"
 			:to="amount"
 			v-if="showQuestionNumbers" />
 	</div>
@@ -36,6 +38,10 @@ import { useGameModes } from '@/composables/useGameModes'
 			type: Number,
 			required: true
 		},
+		checkpoints: {
+			type: Number,
+			default: 0
+		},
 		showQuestionNumbers: {
 			type: Boolean,
 			default: true
@@ -51,6 +57,10 @@ import { useGameModes } from '@/composables/useGameModes'
 	let options = ref()
 	let { formatCount } = useCountFormat()
 	const modes = useGameModes()
+
+	function isMobile() {
+		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+	}
 
 	function succeed() {
 		emit('succeed')

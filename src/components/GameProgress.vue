@@ -14,11 +14,21 @@
 				'via-red-800 from-red-700 to-red-700': shouldApplyCustomState(index) && customState === 'red',
 				'text-slate-500': index !== current && index > max+1,
 			}"
-		><font-awesome-icon :icon="['fas', 'chevron-right']" style="--fa-primary-color:#ffffff;--fa-secondary-color:#ffffff;" v-if="index === current" class="z-10 absolute -left-3 h-[125%] -top-[0.1875rem]"/>{{ from + index - 1 }}</span>
+		>
+			<span class="w-0.5 z-10 absolute left-0 h-full" v-if="checkpoints && (index-1) % checkpoints === 0" :class="{
+				'bg-slate-600': index > current,
+				'bg-slate-400': Math.floor(index / checkpoints) < Math.floor((current-1) / checkpoints),
+				'bg-slate-200': Math.floor(index / checkpoints) === Math.floor((current-1) / checkpoints),
+			}"></span>
+			<font-awesome-icon :icon="['fas', 'chevron-right']" style="--fa-primary-color:#ffffff;--fa-secondary-color:#ffffff;" v-if="index === current" class="z-20 absolute -left-3 h-[125%] -top-[0.1875rem]"/>
+			{{ from + index - 1 }}
+		</span>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue';
+
 const props = defineProps({
 	from: {
 		type: Number,
@@ -36,7 +46,15 @@ const props = defineProps({
 		type: Number,
 		required: true
 	},
+	checkpoints: {
+		type: Number,
+		default: 0
+	},
 	customState: String
+})
+
+watch(() => props.current, val => {
+	console.log(Math.floor(val / props.checkpoints))
 })
 
 let shouldApplyCustomState = (index:number): boolean => !!props.customState && index === props.current

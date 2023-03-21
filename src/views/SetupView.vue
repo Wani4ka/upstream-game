@@ -49,6 +49,7 @@
 				v-model:mode="questions.mode"
 				v-model:time="questions.time"
 				v-model:amount="questionsAmount"
+				v-model:checkpoints="questions.checkpointsPeriod"
 				:category="settings.category"
 				:set="settings.set"
 				v-if="activeScreen === Windows.Settings" />
@@ -118,7 +119,9 @@ function copyToClipboard() {
 		params.push(['gm', questions.mode])
 	if (questionsAmount.value !== 21)
 		params.push(['qs', questionsAmount.value])
-	if (params) {
+	if (questions.checkpointsPeriod)
+		params.push(['cp', questions.checkpointsPeriod])
+	if (params.length) {
 		url += `?${params[0][0]}=${params[0][1]}`
 		for (let i = 1; i < params.length; ++i)
 			url += `&${params[i][0]}=${params[i][1]}`

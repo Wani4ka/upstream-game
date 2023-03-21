@@ -40,6 +40,19 @@ const message = computed(() => {
 	} else return 'Все готово! Запуск игры...'
 })
 
+const parseNumber = (input: string, name: string, int?: boolean, min?: number, max?: number) => {
+	const answer = parseInt(input)
+	if (isNaN(answer) || !isFinite(answer))
+		throw new Error(`invalid ${name}`)
+	if (int !== undefined && Math.floor(answer) !== answer)
+		throw new Error(`${name} should be an integer`)
+	if (min !== undefined && answer < min)
+		throw new Error(`${name} should be no less than ${min}`)
+	if (max !== undefined && answer > max)
+		throw new Error(`${name} should be no more than ${max}`)
+	return answer
+}
+
 function parseParams() {
 	if (route.query.gm) {
 		game.mode = route.query.gm as string
@@ -47,9 +60,10 @@ function parseParams() {
 			throw new Error(`Invalid game mode, possible values are ${Object.keys(modes.data)}`)
 	}
 	if (route.query.qs) {
-		questionsAmount.value = parseInt(route.query.qs as string)
-		if (isNaN(questionsAmount.value) || !isFinite(questionsAmount.value) || questionsAmount.value <= 0 || Math.floor(questionsAmount.value) !== questionsAmount.value)
-			throw new Error('Invalid questions amount')
+		questionsAmount.value = parseNumber(route.query.qs as string, 'questions amount', true, 1)
+	}
+	if (route.query.cp) {
+		questionsAmount.value = parseNumber(route.query.cp as string, 'checkpoints period', true, 0, Math.floor(questionsAmount.value / 2))
 	}
 	game.time = Math.round(modes.modifyTime(questionsAmount.value * 11.9047619048, game.mode))
 }

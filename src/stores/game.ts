@@ -6,6 +6,7 @@ import { ref } from 'vue'
 export const useGameStore = defineStore('game', () => {
 	const name = ref('')
 	const questions = ref<ParsedGameQuestion[]>([])
+	const checkpointsPeriod = ref(0)
 	const mode = ref('classic')
 	const time = ref(250)
 
@@ -21,5 +22,5 @@ export const useGameStore = defineStore('game', () => {
 		setList(await fetcher.fetchQuestions(url, params))
 	}
 
-	return { name, questions, mode, time, setName, setList, fetchList }
+	return { name, questions, checkpointsPeriod, mode, time, setName, setList, fetchList }
 })

@@ -2,6 +2,7 @@
 	<GameIntro
 		v-if="showIntro && introActive"
 		:amount="questions.length"
+		:checkpoints="checkpoints"
 		:mode="mode"
 		@succeed="start"
 		@fail="$emit('fail')" />
@@ -21,6 +22,7 @@
 		<GameProgress
 			:custom-state="questionProgressState"
 			:max="maxAnswers"
+			:checkpoints="checkpoints"
 			:current="currentQuestion + 1"
 			:from="1"
 			:to="questions.length"
@@ -42,6 +44,10 @@ const props = defineProps({
 	questions: {
 		type: Array<ParsedGameQuestion>,
 		required: true,
+	},
+	checkpoints: {
+		type: Number,
+		default: 0,
 	},
 	showQuestionNumbers: {
 		type: Boolean,
@@ -75,9 +81,15 @@ function start() {
 	}, 3000)
 }
 
+const snapToCheckpoint = (current: number) => {
+	if (!props.checkpoints)
+		return 0
+	return props.checkpoints * Math.floor(current / props.checkpoints)
+}
+
 function answer(incorrect: boolean, tempState: string = '') {
 	questionProgressState.value = tempState
-	const nextQuestion = incorrect ? currentQuestion.value + 1 : Math.min(currentQuestion.value, 0)
+	const nextQuestion = incorrect ? currentQuestion.value + 1 : snapToCheckpoint(currentQuestion.value)
 	setTimeout(() => {
 		maxAnswers.value = Math.max(maxAnswers.value, currentQuestion.value)
 		currentQuestion.value = nextQuestion
