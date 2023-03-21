@@ -63,7 +63,7 @@ function parseParams() {
 		questionsAmount.value = parseNumber(route.query.qs as string, 'questions amount', true, 1)
 	}
 	if (route.query.cp) {
-		questionsAmount.value = parseNumber(route.query.cp as string, 'checkpoints period', true, 0, Math.floor(questionsAmount.value / 2))
+		game.checkpointsPeriod = parseNumber(route.query.cp as string, 'checkpoints period', true, 0, Math.floor(questionsAmount.value / 2))
 	}
 	game.time = Math.round(modes.modifyTime(questionsAmount.value * 11.9047619048, game.mode))
 }
