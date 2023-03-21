@@ -85,7 +85,6 @@ import { useGameStore } from '@/stores/game'
 import { useSettingsStore } from '@/stores/settings'
 import SelectableItem from '@/components/SelectableItem.vue'
 import { useGreeting } from '@/composables/useGreeting'
-import { useGameModes } from '@/composables/useGameModes'
 
 const router = useRouter()
 
@@ -124,8 +123,7 @@ function copyToClipboard() {
 		for (let i = 1; i < params.length; ++i)
 			url += `&${params[i][0]}=${params[i][1]}`
 	}
-	navigator.clipboard.writeText(url)
-	alert('Ссылка на генерацию игры скопирована в буфер обмена!')
+	navigator.clipboard.writeText(url).then(() => alert('Ссылка на генерацию игры скопирована в буфер обмена!'))
 }
 
 function launch() {
