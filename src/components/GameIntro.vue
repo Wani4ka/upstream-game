@@ -2,8 +2,8 @@
 	<div class="w-[75vw] max-w-4xl mx-auto">
 		<GameQuestion>
 			<p>{{ modes.data[mode].summary }} на этот и еще {{ amount }} {{ formatCount(amount, 'вопрос', 'вопросов', 'вопроса') }}{{ checkpoints ? '' : ' подряд' }} до истечения таймера, чтобы победить.</p>
-			<p v-if="checkpoints > 0">Чекпойнты расставлены на каждом{{ checkpoints > 1 ? ` ${checkpoints}-м` : '' }} вопросе. Если вы ошибетесь, то вернетесь к последнему пройденному чекпойнту.</p>
-			<p v-if="!isMobile()">Вы можете использовать стрелки <font-awesome-icon icon="fa-solid fa-caret-left"/><font-awesome-icon icon="fa-solid fa-caret-right"/> для выбора ответа, если они у вас есть.</p>
+			<p v-if="checkpoints > 0">Чекпойнты расставлены на каждом{{ checkpoints > 1 ? ` ${checkpoints}-м` : '' }} вопросе. Если вы ошибетесь, то {{ checkpoints > 1 ? 'вернетесь к последнему пройденному чекпойнту' : 'будете отвечать на этот же вопрос снова' }}.</p>
+			<p v-if="!isMobile()">Вы можете использовать стрелки <font-awesome-icon icon="fa-solid fa-caret-left"/><font-awesome-icon icon="fa-solid fa-caret-right"/> для выбора ответа.</p>
 			<p>Вы готовы?</p>
 		</GameQuestion>
 		<GameOptions

@@ -34,6 +34,7 @@ import SettingsCategory from './SettingsCategory.vue'
 import type { QuestionCategory } from '@/declarations/category'
 import type { QuestionSet } from '@/declarations/set'
 import { useGameModes } from '@/composables/useGameModes'
+import { useCheckpointsModifier } from '@/composables/useCheckpointsModifier'
 
 const props = defineProps({
 	category: {
@@ -59,9 +60,10 @@ const emit = defineEmits(['update:mode', 'update:time', 'update:amount', 'update
 
 const updateCheckpoints = (checkpoints: number) => emit('update:checkpoints', checkpoints)
 const updateAmount = (event: any) => emit('update:amount', parseInt(event.target.value))
+const getCheckpointsModifier = useCheckpointsModifier()
 
 const modes = useGameModes()
-const compTime = computed(() => Math.round(modes.modifyTime(props.amount * 11.9047619048, props.mode)))
+const compTime = computed(() => Math.round(modes.modifyTime(props.amount * 11.9047619048, props.mode) * getCheckpointsModifier(props.checkpoints, props.amount)))
 const maxCheckpoints = computed(() => Math.floor(props.amount / 2))
 const minutes = computed(() => Math.floor(compTime.value / 60))
 const seconds = computed(() => compTime.value % 60)

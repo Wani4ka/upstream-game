@@ -21,6 +21,7 @@ import Card from '@/components/Card.vue'
 import Panel from '@/components/Panel.vue'
 import { useGameStore } from '@/stores/game'
 import { useGameModes } from '@/composables/useGameModes'
+import { useCheckpointsModifier } from '@/composables/useCheckpointsModifier'
 
 const route = useRoute()
 const router = useRouter()
@@ -53,6 +54,8 @@ const parseNumber = (input: string, name: string, int?: boolean, min?: number, m
 	return answer
 }
 
+const getCheckpointsModifier = useCheckpointsModifier()
+
 function parseParams() {
 	if (route.query.gm) {
 		game.mode = route.query.gm as string
@@ -65,7 +68,7 @@ function parseParams() {
 	if (route.query.cp) {
 		game.checkpointsPeriod = parseNumber(route.query.cp as string, 'checkpoints period', true, 0, Math.floor(questionsAmount.value / 2))
 	}
-	game.time = Math.round(modes.modifyTime(questionsAmount.value * 11.9047619048, game.mode))
+	game.time = Math.round(modes.modifyTime(questionsAmount.value * 11.9047619048, game.mode) * getCheckpointsModifier(game.checkpointsPeriod, questionsAmount.value))
 }
 
 try {
